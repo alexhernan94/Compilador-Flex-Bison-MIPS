@@ -1,0 +1,987 @@
+Useless nonterminals
+
+   declaraciones
+
+
+Terminals which are not used
+
+   PAR_I
+   PAR_D
+
+
+Useless rules
+
+   38 declaraciones: declaracion SALTOLINEA declaracion
+   39              | declaracion SALTOLINEA declaraciones
+
+
+Grammar
+
+    0 $accept: programa $end
+
+    1 programa: cabecera SALTOLINEA cuerpo
+
+    2 cuerpo: inicio SALTOLINEA sentencias SALTOLINEA fin
+
+    3 cabecera: with SALTOLINEA use
+
+    4 with: WITH IDENTIFICADORSIMB
+
+    5 use: USE IDENTIFICADORSIMB
+
+    6 inicio: PROCEDURE IDENTIFICADOR IS
+
+    7 fin: END IDENTIFICADOR
+
+    8 sentencias: declaracion SALTOLINEA comienzo SALTOLINEA sentencia
+
+    9 comienzo: BEGINN
+
+   10 declaracion: IDENTIFICADOR DOSPUNTOS tipo
+
+   11 tipo: INTEGER
+   12     | FLOAT
+   13     | STRING
+   14     | BOOLEAN
+
+   15 sentencia: expr SALTOLINEA expr
+
+   16 expr: operaciones
+   17     | sentencia_if
+   18     | PUTLINE PIZQ_COM IDENTIFICADOR PDECH_COM
+   19     | IDENTIFICADOR DOSPUNTOS_IGUAL factor
+   20     | COMENTARIO IDENTIFICADOR
+   21     | bucle_while
+
+   22 operaciones: IDENTIFICADOR DOSPUNTOS_IGUAL factor MAS factor
+   23            | IDENTIFICADOR DOSPUNTOS_IGUAL factor MENOS factor
+   24            | IDENTIFICADOR DOSPUNTOS_IGUAL factor POR factor
+   25            | IDENTIFICADOR DOSPUNTOS_IGUAL factor DIV factor
+   26            | factor
+
+   27 factor: NUMENTERO
+   28       | NUMREAL
+   29       | IDENTIFICADOR
+   30       | TRUE
+   31       | FALSE
+
+   32 sentencia_if: IF condicion THEN SALTOLINEA sentencia SALTOLINEA ENDIF
+   33             | IF condicion THEN SALTOLINEA sentencia SALTOLINEA ELSE SALTOLINEA sentencia SALTOLINEA ENDIF
+
+   34 bucle_while: WHILE condicion LOOP SALTOLINEA sentencia SALTOLINEA ENDLOOP
+
+   35 condicion: factor MAYOR_Q factor
+   36          | factor MENOR_Q factor
+   37          | factor IGUAL factor
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+NUMENTERO (258) 27
+MAS (259) 22
+MENOS (260) 23
+POR (261) 24
+DIV (262) 25
+PAR_I (263)
+PAR_D (264)
+IF (265) 32 33
+THEN (266) 32 33
+MAYOR_Q (267) 35
+MENOR_Q (268) 36
+WITH (269) 4
+USE (270) 5
+ELSE (271) 33
+SALTOLINEA (272) 1 2 3 8 15 32 33 34
+PROCEDURE (273) 6
+IS (274) 6
+IDENTIFICADOR (275) 6 7 10 18 19 20 22 23 24 25 29
+END (276) 7
+BEGINN (277) 9
+DOSPUNTOS (278) 10
+INTEGER (279) 11
+FLOAT (280) 12
+STRING (281) 13
+BOOLEAN (282) 14
+IDENTIFICADORSIMB (283) 4 5
+PIZQ_COM (284) 18
+DOSPUNTOS_IGUAL (285) 19 22 23 24 25
+PDECH_COM (286) 18
+PUTLINE (287) 18
+ENDIF (288) 32 33
+NUMREAL (289) 28
+TRUE (290) 30
+FALSE (291) 31
+COMENTARIO (292) 20
+WHILE (293) 34
+LOOP (294) 34
+ENDLOOP (295) 34
+IGUAL (296) 37
+
+
+Nonterminals, with rules where they appear
+
+$accept (42)
+    on left: 0
+programa (43)
+    on left: 1, on right: 0
+cuerpo (44)
+    on left: 2, on right: 1
+cabecera (45)
+    on left: 3, on right: 1
+with (46)
+    on left: 4, on right: 3
+use (47)
+    on left: 5, on right: 3
+inicio (48)
+    on left: 6, on right: 2
+fin (49)
+    on left: 7, on right: 2
+sentencias (50)
+    on left: 8, on right: 2
+comienzo (51)
+    on left: 9, on right: 8
+declaracion (52)
+    on left: 10, on right: 8
+tipo (53)
+    on left: 11 12 13 14, on right: 10
+sentencia (54)
+    on left: 15, on right: 8 32 33 34
+expr (55)
+    on left: 16 17 18 19 20 21, on right: 15
+operaciones (56)
+    on left: 22 23 24 25 26, on right: 16
+factor (57)
+    on left: 27 28 29 30 31, on right: 19 22 23 24 25 26 35 36 37
+sentencia_if (58)
+    on left: 32 33, on right: 17
+bucle_while (59)
+    on left: 34, on right: 21
+condicion (60)
+    on left: 35 36 37, on right: 32 33 34
+
+
+state 0
+
+    0 $accept: . programa $end
+
+    WITH  shift, and go to state 1
+
+    programa  go to state 2
+    cabecera  go to state 3
+    with      go to state 4
+
+
+state 1
+
+    4 with: WITH . IDENTIFICADORSIMB
+
+    IDENTIFICADORSIMB  shift, and go to state 5
+
+
+state 2
+
+    0 $accept: programa . $end
+
+    $end  shift, and go to state 6
+
+
+state 3
+
+    1 programa: cabecera . SALTOLINEA cuerpo
+
+    SALTOLINEA  shift, and go to state 7
+
+
+state 4
+
+    3 cabecera: with . SALTOLINEA use
+
+    SALTOLINEA  shift, and go to state 8
+
+
+state 5
+
+    4 with: WITH IDENTIFICADORSIMB .
+
+    $default  reduce using rule 4 (with)
+
+
+state 6
+
+    0 $accept: programa $end .
+
+    $default  accept
+
+
+state 7
+
+    1 programa: cabecera SALTOLINEA . cuerpo
+
+    PROCEDURE  shift, and go to state 9
+
+    cuerpo  go to state 10
+    inicio  go to state 11
+
+
+state 8
+
+    3 cabecera: with SALTOLINEA . use
+
+    USE  shift, and go to state 12
+
+    use  go to state 13
+
+
+state 9
+
+    6 inicio: PROCEDURE . IDENTIFICADOR IS
+
+    IDENTIFICADOR  shift, and go to state 14
+
+
+state 10
+
+    1 programa: cabecera SALTOLINEA cuerpo .
+
+    $default  reduce using rule 1 (programa)
+
+
+state 11
+
+    2 cuerpo: inicio . SALTOLINEA sentencias SALTOLINEA fin
+
+    SALTOLINEA  shift, and go to state 15
+
+
+state 12
+
+    5 use: USE . IDENTIFICADORSIMB
+
+    IDENTIFICADORSIMB  shift, and go to state 16
+
+
+state 13
+
+    3 cabecera: with SALTOLINEA use .
+
+    $default  reduce using rule 3 (cabecera)
+
+
+state 14
+
+    6 inicio: PROCEDURE IDENTIFICADOR . IS
+
+    IS  shift, and go to state 17
+
+
+state 15
+
+    2 cuerpo: inicio SALTOLINEA . sentencias SALTOLINEA fin
+
+    IDENTIFICADOR  shift, and go to state 18
+
+    sentencias   go to state 19
+    declaracion  go to state 20
+
+
+state 16
+
+    5 use: USE IDENTIFICADORSIMB .
+
+    $default  reduce using rule 5 (use)
+
+
+state 17
+
+    6 inicio: PROCEDURE IDENTIFICADOR IS .
+
+    $default  reduce using rule 6 (inicio)
+
+
+state 18
+
+   10 declaracion: IDENTIFICADOR . DOSPUNTOS tipo
+
+    DOSPUNTOS  shift, and go to state 21
+
+
+state 19
+
+    2 cuerpo: inicio SALTOLINEA sentencias . SALTOLINEA fin
+
+    SALTOLINEA  shift, and go to state 22
+
+
+state 20
+
+    8 sentencias: declaracion . SALTOLINEA comienzo SALTOLINEA sentencia
+
+    SALTOLINEA  shift, and go to state 23
+
+
+state 21
+
+   10 declaracion: IDENTIFICADOR DOSPUNTOS . tipo
+
+    INTEGER  shift, and go to state 24
+    FLOAT    shift, and go to state 25
+    STRING   shift, and go to state 26
+    BOOLEAN  shift, and go to state 27
+
+    tipo  go to state 28
+
+
+state 22
+
+    2 cuerpo: inicio SALTOLINEA sentencias SALTOLINEA . fin
+
+    END  shift, and go to state 29
+
+    fin  go to state 30
+
+
+state 23
+
+    8 sentencias: declaracion SALTOLINEA . comienzo SALTOLINEA sentencia
+
+    BEGINN  shift, and go to state 31
+
+    comienzo  go to state 32
+
+
+state 24
+
+   11 tipo: INTEGER .
+
+    $default  reduce using rule 11 (tipo)
+
+
+state 25
+
+   12 tipo: FLOAT .
+
+    $default  reduce using rule 12 (tipo)
+
+
+state 26
+
+   13 tipo: STRING .
+
+    $default  reduce using rule 13 (tipo)
+
+
+state 27
+
+   14 tipo: BOOLEAN .
+
+    $default  reduce using rule 14 (tipo)
+
+
+state 28
+
+   10 declaracion: IDENTIFICADOR DOSPUNTOS tipo .
+
+    $default  reduce using rule 10 (declaracion)
+
+
+state 29
+
+    7 fin: END . IDENTIFICADOR
+
+    IDENTIFICADOR  shift, and go to state 33
+
+
+state 30
+
+    2 cuerpo: inicio SALTOLINEA sentencias SALTOLINEA fin .
+
+    $default  reduce using rule 2 (cuerpo)
+
+
+state 31
+
+    9 comienzo: BEGINN .
+
+    $default  reduce using rule 9 (comienzo)
+
+
+state 32
+
+    8 sentencias: declaracion SALTOLINEA comienzo . SALTOLINEA sentencia
+
+    SALTOLINEA  shift, and go to state 34
+
+
+state 33
+
+    7 fin: END IDENTIFICADOR .
+
+    $default  reduce using rule 7 (fin)
+
+
+state 34
+
+    8 sentencias: declaracion SALTOLINEA comienzo SALTOLINEA . sentencia
+
+    NUMENTERO      shift, and go to state 35
+    IF             shift, and go to state 36
+    IDENTIFICADOR  shift, and go to state 37
+    PUTLINE        shift, and go to state 38
+    NUMREAL        shift, and go to state 39
+    TRUE           shift, and go to state 40
+    FALSE          shift, and go to state 41
+    COMENTARIO     shift, and go to state 42
+    WHILE          shift, and go to state 43
+
+    sentencia     go to state 44
+    expr          go to state 45
+    operaciones   go to state 46
+    factor        go to state 47
+    sentencia_if  go to state 48
+    bucle_while   go to state 49
+
+
+state 35
+
+   27 factor: NUMENTERO .
+
+    $default  reduce using rule 27 (factor)
+
+
+state 36
+
+   32 sentencia_if: IF . condicion THEN SALTOLINEA sentencia SALTOLINEA ENDIF
+   33             | IF . condicion THEN SALTOLINEA sentencia SALTOLINEA ELSE SALTOLINEA sentencia SALTOLINEA ENDIF
+
+    NUMENTERO      shift, and go to state 35
+    IDENTIFICADOR  shift, and go to state 50
+    NUMREAL        shift, and go to state 39
+    TRUE           shift, and go to state 40
+    FALSE          shift, and go to state 41
+
+    factor     go to state 51
+    condicion  go to state 52
+
+
+state 37
+
+   19 expr: IDENTIFICADOR . DOSPUNTOS_IGUAL factor
+   22 operaciones: IDENTIFICADOR . DOSPUNTOS_IGUAL factor MAS factor
+   23            | IDENTIFICADOR . DOSPUNTOS_IGUAL factor MENOS factor
+   24            | IDENTIFICADOR . DOSPUNTOS_IGUAL factor POR factor
+   25            | IDENTIFICADOR . DOSPUNTOS_IGUAL factor DIV factor
+   29 factor: IDENTIFICADOR .
+
+    DOSPUNTOS_IGUAL  shift, and go to state 53
+
+    $default  reduce using rule 29 (factor)
+
+
+state 38
+
+   18 expr: PUTLINE . PIZQ_COM IDENTIFICADOR PDECH_COM
+
+    PIZQ_COM  shift, and go to state 54
+
+
+state 39
+
+   28 factor: NUMREAL .
+
+    $default  reduce using rule 28 (factor)
+
+
+state 40
+
+   30 factor: TRUE .
+
+    $default  reduce using rule 30 (factor)
+
+
+state 41
+
+   31 factor: FALSE .
+
+    $default  reduce using rule 31 (factor)
+
+
+state 42
+
+   20 expr: COMENTARIO . IDENTIFICADOR
+
+    IDENTIFICADOR  shift, and go to state 55
+
+
+state 43
+
+   34 bucle_while: WHILE . condicion LOOP SALTOLINEA sentencia SALTOLINEA ENDLOOP
+
+    NUMENTERO      shift, and go to state 35
+    IDENTIFICADOR  shift, and go to state 50
+    NUMREAL        shift, and go to state 39
+    TRUE           shift, and go to state 40
+    FALSE          shift, and go to state 41
+
+    factor     go to state 51
+    condicion  go to state 56
+
+
+state 44
+
+    8 sentencias: declaracion SALTOLINEA comienzo SALTOLINEA sentencia .
+
+    $default  reduce using rule 8 (sentencias)
+
+
+state 45
+
+   15 sentencia: expr . SALTOLINEA expr
+
+    SALTOLINEA  shift, and go to state 57
+
+
+state 46
+
+   16 expr: operaciones .
+
+    $default  reduce using rule 16 (expr)
+
+
+state 47
+
+   26 operaciones: factor .
+
+    $default  reduce using rule 26 (operaciones)
+
+
+state 48
+
+   17 expr: sentencia_if .
+
+    $default  reduce using rule 17 (expr)
+
+
+state 49
+
+   21 expr: bucle_while .
+
+    $default  reduce using rule 21 (expr)
+
+
+state 50
+
+   29 factor: IDENTIFICADOR .
+
+    $default  reduce using rule 29 (factor)
+
+
+state 51
+
+   35 condicion: factor . MAYOR_Q factor
+   36          | factor . MENOR_Q factor
+   37          | factor . IGUAL factor
+
+    MAYOR_Q  shift, and go to state 58
+    MENOR_Q  shift, and go to state 59
+    IGUAL    shift, and go to state 60
+
+
+state 52
+
+   32 sentencia_if: IF condicion . THEN SALTOLINEA sentencia SALTOLINEA ENDIF
+   33             | IF condicion . THEN SALTOLINEA sentencia SALTOLINEA ELSE SALTOLINEA sentencia SALTOLINEA ENDIF
+
+    THEN  shift, and go to state 61
+
+
+state 53
+
+   19 expr: IDENTIFICADOR DOSPUNTOS_IGUAL . factor
+   22 operaciones: IDENTIFICADOR DOSPUNTOS_IGUAL . factor MAS factor
+   23            | IDENTIFICADOR DOSPUNTOS_IGUAL . factor MENOS factor
+   24            | IDENTIFICADOR DOSPUNTOS_IGUAL . factor POR factor
+   25            | IDENTIFICADOR DOSPUNTOS_IGUAL . factor DIV factor
+
+    NUMENTERO      shift, and go to state 35
+    IDENTIFICADOR  shift, and go to state 50
+    NUMREAL        shift, and go to state 39
+    TRUE           shift, and go to state 40
+    FALSE          shift, and go to state 41
+
+    factor  go to state 62
+
+
+state 54
+
+   18 expr: PUTLINE PIZQ_COM . IDENTIFICADOR PDECH_COM
+
+    IDENTIFICADOR  shift, and go to state 63
+
+
+state 55
+
+   20 expr: COMENTARIO IDENTIFICADOR .
+
+    $default  reduce using rule 20 (expr)
+
+
+state 56
+
+   34 bucle_while: WHILE condicion . LOOP SALTOLINEA sentencia SALTOLINEA ENDLOOP
+
+    LOOP  shift, and go to state 64
+
+
+state 57
+
+   15 sentencia: expr SALTOLINEA . expr
+
+    NUMENTERO      shift, and go to state 35
+    IF             shift, and go to state 36
+    IDENTIFICADOR  shift, and go to state 37
+    PUTLINE        shift, and go to state 38
+    NUMREAL        shift, and go to state 39
+    TRUE           shift, and go to state 40
+    FALSE          shift, and go to state 41
+    COMENTARIO     shift, and go to state 42
+    WHILE          shift, and go to state 43
+
+    expr          go to state 65
+    operaciones   go to state 46
+    factor        go to state 47
+    sentencia_if  go to state 48
+    bucle_while   go to state 49
+
+
+state 58
+
+   35 condicion: factor MAYOR_Q . factor
+
+    NUMENTERO      shift, and go to state 35
+    IDENTIFICADOR  shift, and go to state 50
+    NUMREAL        shift, and go to state 39
+    TRUE           shift, and go to state 40
+    FALSE          shift, and go to state 41
+
+    factor  go to state 66
+
+
+state 59
+
+   36 condicion: factor MENOR_Q . factor
+
+    NUMENTERO      shift, and go to state 35
+    IDENTIFICADOR  shift, and go to state 50
+    NUMREAL        shift, and go to state 39
+    TRUE           shift, and go to state 40
+    FALSE          shift, and go to state 41
+
+    factor  go to state 67
+
+
+state 60
+
+   37 condicion: factor IGUAL . factor
+
+    NUMENTERO      shift, and go to state 35
+    IDENTIFICADOR  shift, and go to state 50
+    NUMREAL        shift, and go to state 39
+    TRUE           shift, and go to state 40
+    FALSE          shift, and go to state 41
+
+    factor  go to state 68
+
+
+state 61
+
+   32 sentencia_if: IF condicion THEN . SALTOLINEA sentencia SALTOLINEA ENDIF
+   33             | IF condicion THEN . SALTOLINEA sentencia SALTOLINEA ELSE SALTOLINEA sentencia SALTOLINEA ENDIF
+
+    SALTOLINEA  shift, and go to state 69
+
+
+state 62
+
+   19 expr: IDENTIFICADOR DOSPUNTOS_IGUAL factor .
+   22 operaciones: IDENTIFICADOR DOSPUNTOS_IGUAL factor . MAS factor
+   23            | IDENTIFICADOR DOSPUNTOS_IGUAL factor . MENOS factor
+   24            | IDENTIFICADOR DOSPUNTOS_IGUAL factor . POR factor
+   25            | IDENTIFICADOR DOSPUNTOS_IGUAL factor . DIV factor
+
+    MAS    shift, and go to state 70
+    MENOS  shift, and go to state 71
+    POR    shift, and go to state 72
+    DIV    shift, and go to state 73
+
+    $default  reduce using rule 19 (expr)
+
+
+state 63
+
+   18 expr: PUTLINE PIZQ_COM IDENTIFICADOR . PDECH_COM
+
+    PDECH_COM  shift, and go to state 74
+
+
+state 64
+
+   34 bucle_while: WHILE condicion LOOP . SALTOLINEA sentencia SALTOLINEA ENDLOOP
+
+    SALTOLINEA  shift, and go to state 75
+
+
+state 65
+
+   15 sentencia: expr SALTOLINEA expr .
+
+    $default  reduce using rule 15 (sentencia)
+
+
+state 66
+
+   35 condicion: factor MAYOR_Q factor .
+
+    $default  reduce using rule 35 (condicion)
+
+
+state 67
+
+   36 condicion: factor MENOR_Q factor .
+
+    $default  reduce using rule 36 (condicion)
+
+
+state 68
+
+   37 condicion: factor IGUAL factor .
+
+    $default  reduce using rule 37 (condicion)
+
+
+state 69
+
+   32 sentencia_if: IF condicion THEN SALTOLINEA . sentencia SALTOLINEA ENDIF
+   33             | IF condicion THEN SALTOLINEA . sentencia SALTOLINEA ELSE SALTOLINEA sentencia SALTOLINEA ENDIF
+
+    NUMENTERO      shift, and go to state 35
+    IF             shift, and go to state 36
+    IDENTIFICADOR  shift, and go to state 37
+    PUTLINE        shift, and go to state 38
+    NUMREAL        shift, and go to state 39
+    TRUE           shift, and go to state 40
+    FALSE          shift, and go to state 41
+    COMENTARIO     shift, and go to state 42
+    WHILE          shift, and go to state 43
+
+    sentencia     go to state 76
+    expr          go to state 45
+    operaciones   go to state 46
+    factor        go to state 47
+    sentencia_if  go to state 48
+    bucle_while   go to state 49
+
+
+state 70
+
+   22 operaciones: IDENTIFICADOR DOSPUNTOS_IGUAL factor MAS . factor
+
+    NUMENTERO      shift, and go to state 35
+    IDENTIFICADOR  shift, and go to state 50
+    NUMREAL        shift, and go to state 39
+    TRUE           shift, and go to state 40
+    FALSE          shift, and go to state 41
+
+    factor  go to state 77
+
+
+state 71
+
+   23 operaciones: IDENTIFICADOR DOSPUNTOS_IGUAL factor MENOS . factor
+
+    NUMENTERO      shift, and go to state 35
+    IDENTIFICADOR  shift, and go to state 50
+    NUMREAL        shift, and go to state 39
+    TRUE           shift, and go to state 40
+    FALSE          shift, and go to state 41
+
+    factor  go to state 78
+
+
+state 72
+
+   24 operaciones: IDENTIFICADOR DOSPUNTOS_IGUAL factor POR . factor
+
+    NUMENTERO      shift, and go to state 35
+    IDENTIFICADOR  shift, and go to state 50
+    NUMREAL        shift, and go to state 39
+    TRUE           shift, and go to state 40
+    FALSE          shift, and go to state 41
+
+    factor  go to state 79
+
+
+state 73
+
+   25 operaciones: IDENTIFICADOR DOSPUNTOS_IGUAL factor DIV . factor
+
+    NUMENTERO      shift, and go to state 35
+    IDENTIFICADOR  shift, and go to state 50
+    NUMREAL        shift, and go to state 39
+    TRUE           shift, and go to state 40
+    FALSE          shift, and go to state 41
+
+    factor  go to state 80
+
+
+state 74
+
+   18 expr: PUTLINE PIZQ_COM IDENTIFICADOR PDECH_COM .
+
+    $default  reduce using rule 18 (expr)
+
+
+state 75
+
+   34 bucle_while: WHILE condicion LOOP SALTOLINEA . sentencia SALTOLINEA ENDLOOP
+
+    NUMENTERO      shift, and go to state 35
+    IF             shift, and go to state 36
+    IDENTIFICADOR  shift, and go to state 37
+    PUTLINE        shift, and go to state 38
+    NUMREAL        shift, and go to state 39
+    TRUE           shift, and go to state 40
+    FALSE          shift, and go to state 41
+    COMENTARIO     shift, and go to state 42
+    WHILE          shift, and go to state 43
+
+    sentencia     go to state 81
+    expr          go to state 45
+    operaciones   go to state 46
+    factor        go to state 47
+    sentencia_if  go to state 48
+    bucle_while   go to state 49
+
+
+state 76
+
+   32 sentencia_if: IF condicion THEN SALTOLINEA sentencia . SALTOLINEA ENDIF
+   33             | IF condicion THEN SALTOLINEA sentencia . SALTOLINEA ELSE SALTOLINEA sentencia SALTOLINEA ENDIF
+
+    SALTOLINEA  shift, and go to state 82
+
+
+state 77
+
+   22 operaciones: IDENTIFICADOR DOSPUNTOS_IGUAL factor MAS factor .
+
+    $default  reduce using rule 22 (operaciones)
+
+
+state 78
+
+   23 operaciones: IDENTIFICADOR DOSPUNTOS_IGUAL factor MENOS factor .
+
+    $default  reduce using rule 23 (operaciones)
+
+
+state 79
+
+   24 operaciones: IDENTIFICADOR DOSPUNTOS_IGUAL factor POR factor .
+
+    $default  reduce using rule 24 (operaciones)
+
+
+state 80
+
+   25 operaciones: IDENTIFICADOR DOSPUNTOS_IGUAL factor DIV factor .
+
+    $default  reduce using rule 25 (operaciones)
+
+
+state 81
+
+   34 bucle_while: WHILE condicion LOOP SALTOLINEA sentencia . SALTOLINEA ENDLOOP
+
+    SALTOLINEA  shift, and go to state 83
+
+
+state 82
+
+   32 sentencia_if: IF condicion THEN SALTOLINEA sentencia SALTOLINEA . ENDIF
+   33             | IF condicion THEN SALTOLINEA sentencia SALTOLINEA . ELSE SALTOLINEA sentencia SALTOLINEA ENDIF
+
+    ELSE   shift, and go to state 84
+    ENDIF  shift, and go to state 85
+
+
+state 83
+
+   34 bucle_while: WHILE condicion LOOP SALTOLINEA sentencia SALTOLINEA . ENDLOOP
+
+    ENDLOOP  shift, and go to state 86
+
+
+state 84
+
+   33 sentencia_if: IF condicion THEN SALTOLINEA sentencia SALTOLINEA ELSE . SALTOLINEA sentencia SALTOLINEA ENDIF
+
+    SALTOLINEA  shift, and go to state 87
+
+
+state 85
+
+   32 sentencia_if: IF condicion THEN SALTOLINEA sentencia SALTOLINEA ENDIF .
+
+    $default  reduce using rule 32 (sentencia_if)
+
+
+state 86
+
+   34 bucle_while: WHILE condicion LOOP SALTOLINEA sentencia SALTOLINEA ENDLOOP .
+
+    $default  reduce using rule 34 (bucle_while)
+
+
+state 87
+
+   33 sentencia_if: IF condicion THEN SALTOLINEA sentencia SALTOLINEA ELSE SALTOLINEA . sentencia SALTOLINEA ENDIF
+
+    NUMENTERO      shift, and go to state 35
+    IF             shift, and go to state 36
+    IDENTIFICADOR  shift, and go to state 37
+    PUTLINE        shift, and go to state 38
+    NUMREAL        shift, and go to state 39
+    TRUE           shift, and go to state 40
+    FALSE          shift, and go to state 41
+    COMENTARIO     shift, and go to state 42
+    WHILE          shift, and go to state 43
+
+    sentencia     go to state 88
+    expr          go to state 45
+    operaciones   go to state 46
+    factor        go to state 47
+    sentencia_if  go to state 48
+    bucle_while   go to state 49
+
+
+state 88
+
+   33 sentencia_if: IF condicion THEN SALTOLINEA sentencia SALTOLINEA ELSE SALTOLINEA sentencia . SALTOLINEA ENDIF
+
+    SALTOLINEA  shift, and go to state 89
+
+
+state 89
+
+   33 sentencia_if: IF condicion THEN SALTOLINEA sentencia SALTOLINEA ELSE SALTOLINEA sentencia SALTOLINEA . ENDIF
+
+    ENDIF  shift, and go to state 90
+
+
+state 90
+
+   33 sentencia_if: IF condicion THEN SALTOLINEA sentencia SALTOLINEA ELSE SALTOLINEA sentencia SALTOLINEA ENDIF .
+
+    $default  reduce using rule 33 (sentencia_if)

@@ -1,0 +1,24 @@
+Cabecera -> with y use
+Inicio -> procedure
+Declaracion -> int
+Comienzo -> begin
+  factor --> variable
+  factor--> NUMENTERO(10)
+Condicion
+Comentario
+  factor --> variable
+  factor--> NUMENTERO(2)
+Operación SUMA
+Bucle WHILE
+  factor --> variable
+  factor--> NUMENTERO(10)
+Condicion
+Put_Line
+  factor --> variable
+  factor--> NUMENTERO(4)
+Operación MULTIPLICACION
+Comentario
+  factor --> variable
+Asignacion
+Sentencia IF
+Final -> end
